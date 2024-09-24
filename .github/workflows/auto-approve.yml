@@ -17,11 +17,10 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const octokit = new github.getOctokit(process.env.GITHUB_TOKEN);
-            const { context } = github;
-            const pull_number = context.payload.pull_request.number;
+            const pull_number = github.context.payload.pull_request.number;
             await octokit.pulls.createReview({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
+              owner: github.context.repo.owner,
+              repo: github.context.repo.repo,
               pull_number,
               event: 'APPROVE'
             });
